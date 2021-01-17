@@ -17,8 +17,11 @@
 package com.example.android.eggtimernotifications.util
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import androidx.core.app.NotificationCompat
+import com.example.android.eggtimernotifications.MainActivity
 import com.example.android.eggtimernotifications.R
 
 // Notification ID.
@@ -38,7 +41,27 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     // this activity
     // TODO: Step 1.11 create intent
 
+    //PendingIntent's base intent pass in the context and the activity to be launched
+    val contentIntent = Intent(applicationContext, MainActivity::class.java)
+
     // TODO: Step 1.12 create PendingIntent
+
+
+
+
+     //base intent - ass in the context and the activity to be launched
+    val intent = Intent(applicationContext, MainActivity::class.java)
+
+    val pendingIntent = PendingIntent.getActivity(
+            applicationContext, // -> context in which this PI should start the activity
+            NOTIFICATION_ID, // -> private request code for the sender
+            intent, // -> base intent/ intent of the activity to be launched
+            PendingIntent.FLAG_CANCEL_CURRENT)// -> flag to control  behaviour of
+                                             // multiple PendingIntents
+
+
+
+
 
     // TODO: Step 2.0 add style
 
@@ -46,17 +69,17 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
     // TODO: Step 1.2 get an instance of NotificationCompat.Builder
     // Build the notification
-    val builder =
-            NotificationCompat.Builder(
-                    applicationContext, applicationContext.getString(R.string.egg_notification_channel_id))
-    // TODO: Step 1.8 use the new 'breakfast' notification channel
+    val builder = NotificationCompat.Builder(
+            applicationContext, applicationContext.getString(R.string.egg_notification_channel_id))
+            // TODO: Step 1.8 use the new 'breakfast' notification channel
 
-    // TODO: Step 1.3 set title, text and icon to builder
-                    .setSmallIcon(R.drawable.cooked_egg )
-                    .setContentTitle(applicationContext.resources.getString(R.string.notification_title))
-                    .setContentText(messageBody)
+            // TODO: Step 1.3 set title, text and icon to builder
+            .setSmallIcon(R.drawable.cooked_egg)
+            .setContentTitle(applicationContext.resources.getString(R.string.notification_title))
+            .setContentText(messageBody)
     // TODO: Step 1.13 set content intent
-
+            .setContentIntent(pendingIntent) //add pending intent
+            .setAutoCancel(true ) //dismiss the notification
     // TODO: Step 2.1 add style to builder
 
     // TODO: Step 2.3 add snooze action
