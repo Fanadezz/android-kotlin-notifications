@@ -34,10 +34,10 @@ class AlarmReceiver: BroadcastReceiver() {
         // TODO: Step 1.9 add call to sendNotification
 
 
-        //get instance of NotificationManager
+        //get instance of NotificationManager - //ContextCompat - Helper for accessing features in Context.
         val notificationManager = ContextCompat.getSystemService(context,NotificationManager::class
                 .java)as NotificationManager
-
+        //notificationManager class has the ext fxn created for NotificationUtils
         notificationManager.sendNotification(context.getString(R.string.eggs_ready),context)
     }
 

@@ -121,12 +121,12 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
 
                 // TODO: Step 1.5 get an instance of NotificationManager and call sendNotification
 
-
+/*
                 //ContextCompat - Helper for accessing features in Context.
                 val notificationManager = ContextCompat.getSystemService(app,NotificationManager::class
                         .java) as NotificationManager
 //notificationManager class has the ext fxn created for NotificationUtils
-                notificationManager.sendNotification(app.getString(R.string.timer_running), app)
+                notificationManager.sendNotification(app.getString(R.string.timer_running), app)*/
 
 
                 // TODO: Step 1.15 call cancel notification
