@@ -17,11 +17,13 @@
 package com.example.android.eggtimernotifications.util
 
 import android.app.NotificationManager
+import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_HIGH
 import com.example.android.eggtimernotifications.MainActivity
 import com.example.android.eggtimernotifications.R
 import com.example.android.eggtimernotifications.receiver.SnoozeReceiver
@@ -101,7 +103,8 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             R.drawable.egg_icon, applicationContext.getString(R.string.snooze), snoozePendingIntent)
 
     // TODO: Step 2.5 set priority
-
+// this for versions < API level 25
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
     // TODO: Step 1.4 call notify
     this.notify(NOTIFICATION_ID, builder.build())
 }
