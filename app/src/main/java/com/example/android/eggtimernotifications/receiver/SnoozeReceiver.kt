@@ -26,8 +26,9 @@ import android.os.SystemClock
 import android.text.format.DateUtils
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
+import com.example.android.eggtimernotifications.util.cancelAllNotifications
 
-class SnoozeReceiver: BroadcastReceiver() {
+class SnoozeReceiver : BroadcastReceiver() {
     private val REQUEST_CODE = 0
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -35,18 +36,21 @@ class SnoozeReceiver: BroadcastReceiver() {
 
         val notifyIntent = Intent(context, AlarmReceiver::class.java)
         val notifyPendingIntent = PendingIntent.getBroadcast(
-            context,
-            REQUEST_CODE,
-            notifyIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+                context, REQUEST_CODE, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         AlarmManagerCompat.setExactAndAllowWhileIdle(
-            alarmManager,
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            triggerTime,
-            notifyPendingIntent
-        )
+                alarmManager, AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerTime, notifyPendingIntent)
+
+
+        //get instance of NotificationManager
+        val notificationManager =
+                ContextCompat.getSystemService(
+                        context, NotificationManager::class.java) as NotificationManager
+
+        //cancel all Notification - ext fxn
+        notificationManager.cancelAllNotifications()
+
+        //this removes the snoozed notification
     }
 
 }

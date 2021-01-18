@@ -24,11 +24,13 @@ import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import com.example.android.eggtimernotifications.MainActivity
 import com.example.android.eggtimernotifications.R
+import com.example.android.eggtimernotifications.receiver.SnoozeReceiver
 
 // Notification ID.
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
-private val FLAGS = 0
+private val FLAGS = 0 /*FLAG_ONE_SHOT
+Flag indicating that this PendingIntent can be used only once.*/
 
 // TODO: Step 1.1 extension function to send messages (GIVEN)
 /**
@@ -62,10 +64,18 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     val bigPicStyle =
             NotificationCompat.BigPictureStyle()
                     .bigPicture(eggImage)
-                   .bigLargeIcon(null)//set to null to make the large icon disappear when the notification
+                    .bigLargeIcon(null) //set to null to make the large icon disappear when the notification
     // is expanded
-    // TODO: Step 2.2 add snooze action
 
+    //TODO: Step 2.2 add snooze PendingIntent
+    //pending intent  to schedule a new alarm and post a new notification after 60 secs
+
+    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
+
+    //pendingIntent with ONE_SHOT_FLAG for one-time use
+
+    val snoozePendingIntent =
+            PendingIntent.getBroadcast(applicationContext, REQUEST_CODE, snoozeIntent, FLAGS)
     // TODO: Step 1.2 get an instance of NotificationCompat.Builder
     // Build the notification
     val builder = NotificationCompat.Builder(
@@ -80,10 +90,15 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             .setContentIntent(pendingIntent) //add pending intent
             .setAutoCancel(true) //dismiss the notification
 
-            .setStyle(bigPicStyle) .setLargeIcon(eggImage)
-    // TODO: Step 2.1 add style to builder
+            // TODO: Step 2.1 add style to builder
+
+            .setStyle(bigPicStyle)
+            .setLargeIcon(eggImage)
+
 
     // TODO: Step 2.3 add snooze action
+    .addAction(
+            R.drawable.egg_icon, applicationContext.getString(R.string.snooze), snoozePendingIntent)
 
     // TODO: Step 2.5 set priority
 
