@@ -103,7 +103,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             R.drawable.egg_icon, applicationContext.getString(R.string.snooze), snoozePendingIntent)
 
     // TODO: Step 2.5 set priority
-// this for versions < API level 25
+// this for versions < API level 25 - using NotificationCompat here
             .setPriority(NotificationCompat.PRIORITY_HIGH)
     // TODO: Step 1.4 call notify
     this.notify(NOTIFICATION_ID, builder.build())

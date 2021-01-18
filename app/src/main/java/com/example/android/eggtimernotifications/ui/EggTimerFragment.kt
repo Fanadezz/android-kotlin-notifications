@@ -63,9 +63,14 @@ class EggTimerFragment : Fragment() {
                     channelId, channelName,
 
                     //TODO Step 2.4 change importance
+
+
+                    //use NotificationManager here //you need to restart to apply this setting
                     NotificationManager.IMPORTANCE_HIGH)
             //TODO: Step 2.6 disable badges for this channel
 
+                    //you need to restart to apply this setting
+                    .apply { setShowBadge(false) }
 
             //customize the notificationChannel
             notificationChannel.enableLights(true)
