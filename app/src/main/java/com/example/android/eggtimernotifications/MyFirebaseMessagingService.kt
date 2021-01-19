@@ -17,6 +17,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         Timber.i("Refreshed Token: $token")
 
         //pretend to send token
-        
+
     }
 }
