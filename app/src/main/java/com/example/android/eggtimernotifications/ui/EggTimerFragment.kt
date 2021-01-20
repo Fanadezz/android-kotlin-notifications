@@ -18,19 +18,20 @@ package com.example.android.eggtimernotifications.ui
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.eggtimernotifications.R
 import com.example.android.eggtimernotifications.databinding.FragmentEggTimerBinding
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 
 class EggTimerFragment : Fragment() {
 
@@ -48,8 +49,17 @@ class EggTimerFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
 
         // TODO: Step 1.7 call create channel
-        createChannel(getString(R.string.egg_notification_channel_id), getString(R.string.egg_notification_channel_name))
+        createChannel(
+                getString(R.string.egg_notification_channel_id),
+                getString(R.string.egg_notification_channel_name))
 
+        //TODO: Step 3.1 create a new channel for FCM
+        createChannel(
+                getString(R.string.breakfast_notification_channel_id),
+                getString(R.string.breakfast_notification_channel_name))
+//TODO: Step 3.4 call subscribe topic on start
+
+        subscribeTopic()
         return binding.root
     }
 
@@ -67,7 +77,7 @@ class EggTimerFragment : Fragment() {
 
                     //use NotificationManager here //you need to restart to apply this setting
                     NotificationManager.IMPORTANCE_HIGH)
-            //TODO: Step 2.6 disable badges for this channel
+                    //TODO: Step 2.6 disable badges for this channel
 
                     //you need to restart to apply this setting
                     .apply { setShowBadge(false) }
@@ -94,6 +104,21 @@ class EggTimerFragment : Fragment() {
 
     }
 
+    //TODO Step. 3.3 Subscribe to breakfast topic
+    private fun subscribeTopic (){
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC).addOnCompleteListener { task ->
+
+            var msg = getString(R.string.message_subscribed)
+
+            if (!task.isSuccessful){
+
+                msg = getString(R.string.message_subscribe_failed)
+            }
+            Toast.makeText(activity, msg, Toast.LENGTH_SHORT)
+                    .show()
+        }
+    }
     companion object {
         fun newInstance() = EggTimerFragment()
     }

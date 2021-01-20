@@ -60,7 +60,7 @@
             android:resource="@drawable/common_google_signin_btn_icon_dark"/>
 
         <!--Set color used with incoming notification messages. This is used when no color is
-        specified-->
+        set for the incoming notification message-->
 
         <meta-data android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent"/>
